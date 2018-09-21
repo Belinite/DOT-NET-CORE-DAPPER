@@ -1,0 +1,85 @@
+
+
+insert into Client (Name, Surname, Email, Password, Address) values ('Екатерина', 'Белините', 'belinite1@gmail.com', '111', 'Казань') 
+insert into Client (Name, Surname, Email, Password, Address) values ('Иван', 'Иванов', 'ivan@gmail.com', '444', 'Н.Челны') 
+insert into Client (Name, Surname, Email, Password, Address) values ('Семен', 'Смирнов', 'semen1@gmail.com', 'ghh1', 'Чистополь') 
+insert into Client (Name, Surname, Email, Password, Address) values ('Анна', 'Иванова', 'ann@gmail.com', 'hdbvjh', 'Высокая Гора') 
+
+
+insert into Provider (Name) values ('Пятерочка') 
+insert into Provider (Name) values ('Перекресток') 
+
+select * from Category 
+insert into Category (Name) values ('Овощи') 
+insert into Category (Name) values ('Фрукты') 
+
+
+select * from Basket 
+insert into Basket (Quantity, Date) values (1, GETDATE()) 
+insert into Basket (Quantity, Date) values (2, GETDATE()) 
+
+
+select * from Orders 
+
+insert into Orders (Date, Delivery) values (GETDATE(), 'Курьерская доставка') 
+insert into Orders (Date, Delivery) values (GETDATE(), 'Доставка по почте ') 
+
+
+insert into Products (Name, Price, Quantity) values ('Помидоры', 100,3) 
+insert into Products (Name, Price, Quantity) values ('Огурцы', 100, 1) 
+
+select * from Products 
+drop database store 
+
+create database store 
+CREATE TABLE [dbo].[Client] 
+( 
+[Id] INT IDENTITY PRIMARY KEY, 
+[Name] NVARCHAR(50) NOT NULL, 
+[Surname] NVARCHAR(50) NOT NULL, 
+[Email] NVARCHAR(50) NOT NULL, 
+[Password] NVARCHAR(50) NOT NULL, 
+[Address] NVARCHAR(50) NOT NULL 
+) 
+
+CREATE TABLE [dbo].[Category] 
+( 
+[Id] INT NOT NULL IDENTITY PRIMARY KEY, 
+[Name] NCHAR(20) NOT NULL 
+) 
+
+CREATE TABLE [dbo].[Basket] 
+( 
+[Id] INT NOT NULL IDENTITY PRIMARY KEY, 
+[Quantity] INT NOT NULL, 
+[Date] DATETIME NOT NULL 
+) 
+
+
+CREATE TABLE [dbo].[Orders] 
+( 
+[Id] INT NOT NULL IDENTITY PRIMARY KEY, 
+[Date] DATETIME NOT NULL, 
+[Delivery] NVARCHAR(50) NULL, 
+CONSTRAINT [id_client] FOREIGN KEY (Id) REFERENCES Client (Id) 
+) 
+
+
+CREATE TABLE [dbo].[Products] 
+( 
+[Id] INT NOT NULL IDENTITY PRIMARY KEY, 
+[Name] NVARCHAR(50) NOT NULL, 
+[Price] INT NOT NULL,  
+[Quantity] INT NOT NULL, 
+CONSTRAINT [id_category] FOREIGN KEY (Id) REFERENCES Category (Id), 
+CONSTRAINT [id_provider] FOREIGN KEY (Id) REFERENCES Provider (Id), 
+CONSTRAINT [id_basket] FOREIGN KEY (Id) REFERENCES Basket (Id), 
+CONSTRAINT [id_order] FOREIGN KEY (Id) REFERENCES Orders (Id), 
+
+) 
+
+CREATE TABLE [dbo].[Provider] 
+( 
+[Id] INT NOT NULL IDENTITY PRIMARY KEY, 
+[Name] NCHAR(20) NOT NULL 
+) 
